@@ -57,4 +57,3 @@ class Bid(models.Model):
     amount = models.IntegerField()
     # is_cancelled = models.BooleanField(default=False)
     date = models.DateTimeField('when the bid was made')
-

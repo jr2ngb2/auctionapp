@@ -22,6 +22,7 @@ from auctions import views as auctions_views
 
 urlpatterns = [
     path('', auctions_views.index, name="index"),
+    path('about/', auctions_views.about, name="about"),
     path('myauctions/', auctions_views.my_auctions, name="my_auctions"),
     path('mybids/', auctions_views.my_bids, name="my_bids"),
     path('auctions/', include('auctions.urls')),

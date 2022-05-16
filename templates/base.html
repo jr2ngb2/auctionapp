@@ -13,12 +13,12 @@
       {% block sidebar %}
         <ul class="navbar">
           <li class="auction-rush-button">
-              <a class="navbar-link" href="{% url 'index' %}">
-                  ZotVerse
-                  <!-- <img src="/static/peter1.gif" style="width:30px;height:15px;"> -->
-              </a>
-          </li>
-          <li class="navbar-item"><a class="navbar-link" href="{% url 'auctions:auctions' %}">All auctions</a></li>
+            <a class="navbar-link" href="{% url 'about' %}">
+                ZotVerse
+            </a>
+        </li>
+          <li class="navbar-item"><a class="navbar-link" href="{% url 'auctions:auctions' %}">All Listings</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="{% url 'index' %}"">Active Listing</a></li>
           {% if user.is_authenticated %}
           <li class="navbar-item"><a class="navbar-link" href="{% url 'my_auctions' %}">My auctions</a></li>
           <li class="navbar-item"><a class="navbar-link" href="{% url 'my_bids' %}">My bids</a></li>
@@ -31,11 +31,11 @@
             <li class="navbar-item-right"><a class="navbar-link" href="{% url 'login' %}?next={% url 'index' %}">Login</a></li>
             <li class="navbar-item-right"><a class="navbar-link" href="{% url 'register' %}?next={{request.path}}">Register</a></li>
           {% endif %}
-          <div >
+          <div style = "margin-top: 15px;">
             <!-- class="form-group mx-sm-3 mb-2" -->
             <!-- <li for="" class="sr-only"></li> -->
             <form method="post" action="/auctions/search" >
-              <input name="search_keyword" type="" class="navbar-link" id="" placeholder="Keyword"/>
+              <input name="search_keyword" type="" class="navbar-link" id="" placeholder="search...."/>
               <button type="submit">Submit<i class="fa fa-search"></i></button>
             </form>
             

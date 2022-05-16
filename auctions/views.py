@@ -175,6 +175,9 @@ def my_bids(request):
     }
     return HttpResponse(template.render(context, request))
 
+def about(request):
+    return render(request, 'auctions/about.html')
+
 def search(request):
     searchListing = Auction.objects.filter(desc__icontains=request.POST["search_keyword"])
     print('\n\nsyapa\n\n')
@@ -204,3 +207,4 @@ def search(request):
     # return JsonResponse({
     #     "objects": result
     # })
+
