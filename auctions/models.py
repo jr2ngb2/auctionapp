@@ -10,7 +10,7 @@ class Auction(models.Model):
     image = models.ImageField(upload_to='auction_images/', blank=True, default = 'auction_images/default/default.svg')
     min_value = models.IntegerField()
     date_added = models.DateTimeField()
-    duration = models.IntegerField(default=24)
+    duration = models.FloatField(default=24)
     is_active = models.BooleanField(default=True)
     winner = models.ForeignKey(User, on_delete=models.SET("(deleted)"),
                                blank=True,
@@ -47,7 +47,8 @@ class Auction(models.Model):
             now = datetime.now(timezone.utc)
             expiration = self.date_added + timedelta(hours=self.duration)
             minutes_remaining = ceil((expiration - now).total_seconds() / (60))
-            return(minutes_remaining)
+            ans = str(minutes_remaining // 60) + "H "+ str(minutes_remaining % 60) + "M"
+            return(ans)
         else:
             return(0)
 

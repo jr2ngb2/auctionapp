@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card container-fluid" style = "margin: 10%; width : 80%">
+<p>Your transaction was successful. Kindly contact the seller for further steps about delivery through the details below : </p>
+<p id="author">
+</p>
+</div>
+<script>
+    var author_name = window.localStorage.getItem("author");
+    var author_email = window.localStorage.getItem("email");
+    var author_phone = window.localStorage.getItem("phone");
+    var transaction_ID = window.localStorage.getItem("transactionId");
+
+
+    
+    document.getElementById("author").innerHTML = "<p> Transaction ID : " + transaction_ID +"</p><p>Seller Name : "  + author_name + "</p> <p> Seller Email : " +
+         author_email + "<p> Seller Phone No. :" + author_phone ;
+</script>
+    <img src="/static/thanks.jpeg" style= "vertical-align: middle; height: 250px; width: 50%; margin-left: 25%;">
+
+<!-- <b style = "margin-left: 35%;">Thank you for using ZotVerse, ZOT ZOT ZOT!!</b> -->
+{% endblock %}

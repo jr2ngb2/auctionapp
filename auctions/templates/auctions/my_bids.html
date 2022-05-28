@@ -9,14 +9,62 @@
         <li class="my-bid-li"><a class="my-bid-link" href="{% url 'auctions:detail' bid.auction.id %}">{{ bid.auction.title }}</a>
             <hr>
             <div class="my-bid-label">
-                My last bid: {{ bid.amount }}$
-                <div class="my-bid-date">({{ bid.date }})</div>
+                My last bid: ${{ bid.amount }}
+                <!-- <div class="my-bid-date">({{ bid.date }})</div> -->
             </div>
             {% if bid.auction.is_active %}
                 <div class="my-bid-status-active">Pending</div>
             {% else %}
                 {% if bid.auction.winner and bid.auction.winner == user %}
-                    <div class="my-bid-status-won">Won for {{ bid.amount }}$</div>
+                <div>Congratulations !! You have won the bid for <b>{{bid.auction.title }}</b></div>
+                <br>
+                <div>Please complete the payment to proceed further.</div>    
+                <br>
+                <div>
+                    <div class="my-bid-status-won">Won for ${{ bid.amount }}</div>
+                    <div id="paypal-button-container"></div>
+                    </div>
+                    <script>
+                        var amt = '{{ bid.amount }}';
+                        // Render the PayPal button into #paypal-button-container
+                        paypal.Buttons({
+                
+                            // Set up the transaction
+                            createOrder: function(data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: parseFloat(amt).toFixed(2)
+                                        }
+                                    }]
+                                });
+                            },
+                
+                            // Finalize the transaction
+                            onApprove: function(data, actions) {
+                                return actions.order.capture().then(function(orderData) {
+                                    // Successful capture! For demo purposes:
+                                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                                    //alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+                                    
+                                        window.localStorage.setItem("author" , "{{bid.auction.author.username}}");
+                                        window.localStorage.setItem("phone" , "{{bid.auction.author.phone}}");
+                                        window.localStorage.setItem("email" , "{{bid.auction.author.email}}");
+                                        window.localStorage.setItem("transactionId" , transaction.id);
+                                        window.location.href = "/successPage";
+                                        
+                                    // Replace the above to show a success message within this page, e.g.
+                                    // const element = document.getElementById('paypal-button-container');
+                                    // element.innerHTML = '';
+                                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                                    // Or go to another URL:  actions.redirect('thank_you.html');
+                                });
+                            }
+                
+                
+                        }).render('#paypal-button-container');
+                    </script>
                 {% else %}
                     <div class="my-bid-status-lost">Lost</div>
                 {% endif %}

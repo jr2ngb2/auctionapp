@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div class="login-wrapper">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<!-- <div class="login-wrapper container card-body">
     {% if form.errors %}
       <p class="error">Your username and password didn't match. Please try again.</p>
     {% endif %}
@@ -33,5 +33,76 @@
 
     {# Assumes you setup the password_reset view in your URLconf #}
     <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-</div>
+</div> -->
+<section class="h-100">
+  <div class="container h-100">
+    <div class="row justify-content-sm-center h-100">
+      <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+       
+        <div class="card shadow-lg">
+          <div class="card-body p-5 ml-4">
+            <h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+            <form method="POST"  autocomplete="off" action="{% url 'login' %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <div class ="ml-5">
+                  {% if form.errors %}
+                  
+                  <p class="error">Your username and password didn't match. Please try again.</p>
+                {% endif %}
+                {% if next %}
+                {% if user.is_authenticated %}
+                  <p>Your account doesn't have access to this page. To proceed,
+                  please login with an account that has access.</p>
+                {% else %}
+                  <p>Please login to see this page.</p>
+                {% endif %}
+              {% endif %}  
+              </div>
+                <span>{{ form.username.label_tag }}</span>
+                <!-- <span class="textbox">{{ form.username }}</span> -->
+                <!-- <label class="mb-2 text-muted" for="email">E-Mail Address</label> -->
+                {{form.username}}
+                <!-- <input id="email" type="email" class="form-control" name="email" value="{{ form.username }}" required autofocus /> -->
+                
+              </div>
+
+              <div class="mb-3">
+                <div class="mb-2 w-100 ml-1">
+                  <!-- <label class="text-muted" for="password">Password</label> -->
+                  <span>{{ form.password.label_tag }}</span>
+                  {{form.password}}
+                  
+                </div>
+                
+                <!-- <input id="password" type="password" class="form-control" name="password" value = "{{form.password}}"required> -->
+                  <div class="invalid-feedback">
+                    Password is required
+                  </div>
+                  
+              </div>
+
+              <div class="d-flex align-items-center" style="padding-left:125px">
+                
+                <input class="submit_button btn btn-primary ms-auto"  type="submit" value="Login" />
+                <input type="hidden" name="next" value="{{ next }}" />
+              </div>
+              <a href="{% url 'password_reset' %}" class="float-end" style="padding-left:100px">
+                Forgot Password?
+              </a>
+            </form>
+          </div>
+          <div class="card-footer py-3 border-0">
+            <div class="text-center">
+              Don't have an account? <a href="{% url 'register' %}" class="text-dark">Create One</a>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-5 text-muted">
+          Copyright &copy; 2022-Present &mdash; ZotVerse 
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

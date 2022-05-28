@@ -30,7 +30,8 @@
 </div>
 <div class="wrapper">
     <span class="auction-card">
-        <span><img class="auction_image_index" src="{{ auction.image.url }}"></span>
+        <span><img class="auction_image_index" src="{{ auction.image.url }}" style=" 
+            max-width: 100%;margin-top: 5%;" onerror="this.onerror=null; this.src='/static/nofound.png'"></span>
             {% if auction.is_active %}
                 {% if auction.remaining_minutes < 2 %}
                     <div class="auction-card-urgent">Less than {{ auction.remaining_minutes }} min</div>
@@ -40,7 +41,7 @@
             {% else %}
             <div class="auction-card-inactive">Expired</div>
             {% endif %}
-            <div class="auction-card-value">{{ auction.min_value }}$</div>
+            <div class="auction-card-value">${{ auction.min_value }}</div>
         </div>
     </span>
 </div>

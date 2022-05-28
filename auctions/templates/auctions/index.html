@@ -5,19 +5,24 @@
 {% if auction_list %}
     <div class="wrapper">
     {% for auction in auction_list %}
-        <a class="auction-card" href="{% url 'auctions:detail' auction.id %}">
-            <div><img class="auction_image_index" src="{{ auction.image.url }}"></div>
+        <a class="auction-card"  href="{% url 'auctions:detail' auction.id %}"> 
+            <div class="container-fluid"><img class="auction_image_index" style=" 
+                    max-width: 100%;margin-top: 5%;" src="{{ auction.image.url }}" onerror="this.onerror=null; this.src='/static/nofound.png'" alt=""></div>
+            
+                <!-- <div class="container-fluid"><img class="auction_image_index" style="
+                    max-width: 100%;margin-top: 5%;"src="https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/tnc_34284690_1640x1025.jpg?crop=0%2C184%2C1640%2C861&wid=1200&hei=630&scl=1.3666666666666667"/></div> -->
             <div class="auction-card-title">{{ auction.title }}</div>
             {% if auction.is_active %}
                 {% if auction.remaining_minutes < 2 %}
-                    <div class="auction-card-urgent">Less than {{ auction.remaining_minutes }}min</div>
+                    <div class="auction-card-urgent">Less than {{ auction.remaining_minutes }}</div>
                 {% else %}
-                    <div class="auction-card-active">Less than {{ auction.remaining_minutes }}min</div>
+                    <div class="auction-card-active">Less than {{ auction.remaining_minutes }}</div>
                 {% endif %}
             {% else %}
             <div class="auction-card-inactive">Expired</div>
             {% endif %}
-            <div class="auction-card-value">{{ auction.min_value }}$</div>
+            <div class="auction-card-value">${{ auction.min_value }}</div>
+            
         </a>
         <!-- <li class="auction-card"><a href="{% url 'auctions:detail' auction.id %}">{{ auction.title }}</a></li> -->
     {% endfor %}

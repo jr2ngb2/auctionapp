@@ -122,6 +122,7 @@ def create(request):
             title = request.POST['title']
             min_value = request.POST['min_value']
             duration = request.POST['duration']
+            # image_uploaded = request.POST['image']
             if not title or not min_value or not duration:
                 raise(KeyError)
         except (KeyError):
@@ -178,8 +179,11 @@ def my_bids(request):
 def about(request):
     return render(request, 'auctions/about.html')
 
+def success(request):
+    return render(request , 'auctions/successPage.html')
+
 def search(request):
-    searchListing = Auction.objects.filter(desc__icontains=request.POST["search_keyword"])
+    searchListing = Auction.objects.filter(desc__icontains=request.POST["search_keyword"]) | Auction.objects.filter(title__icontains=request.POST["search_keyword"]) 
     print('\n\nsyapa\n\n')
     # result = [
     #     {
@@ -207,4 +211,5 @@ def search(request):
     # return JsonResponse({
     #     "objects": result
     # })
+
 

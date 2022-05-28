@@ -4,14 +4,21 @@
   {% block title %}<title>ZotVerse</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://www.paypal.com/sdk/js?client-id=AYexVdfsCv1PhFabgk8Z5TLQUDTk1nZzNxOim-44vefTpZJ0MGLeIfL2Dn6HDqCOpfdy_c2UHhqSX3G2&currency=USD"></script>
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-zIaWifL2YFF1qaDiAo0JFgsmasocJ/rqu7LKYH8CoBEXqGbb9eO+Xi3s6fQhgFWM" crossorigin="anonymous">
   <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
       {% block sidebar %}
-        <ul class="navbar">
+        <ul class="navbar" style="overflow:visible">
           <li class="auction-rush-button">
             <a class="navbar-link" href="{% url 'about' %}">
                 ZotVerse
@@ -19,27 +26,53 @@
         </li>
           <li class="navbar-item"><a class="navbar-link" href="{% url 'auctions:auctions' %}">All Listings</a></li>
           <li class="navbar-item"><a class="navbar-link" href="{% url 'index' %}"">Active Listing</a></li>
+          <li class="navbar-item">
+          <div class="input-group">
+            <div class="form-outline">
+              <form method="post" action="/auctions/search" >
+              <input name = "search_keyword" type="search" placeholder="Enter the product name" class="form-control" />
+              
+              
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <span>Search</span>
+            </button>
+          </form>
+          </div>
+          
+          <!-- <div style = ""> -->
+            <!-- class="form-group mx-sm-3 mb-2" -->
+            <!-- <li for="" class="sr-only"></li> -->
+            <!-- <form method="post" action="/auctions/search" >
+              <input name="search_keyword" type="" class="navbar-link" id="" placeholder="search...."/>
+              <button type="submit" class="btn">Submit<i class="fa fa-search"></i></button>
+            </form> -->
+            
+            <!-- </div> -->
+          </li>
           {% if user.is_authenticated %}
-          <li class="navbar-item"><a class="navbar-link" href="{% url 'my_auctions' %}">My auctions</a></li>
-          <li class="navbar-item"><a class="navbar-link" href="{% url 'my_bids' %}">My bids</a></li>
+          <!-- <li class="navbar-item"><a class="navbar-link" href="{% url 'my_auctions' %}">My auctions</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="{% url 'my_bids' %}">My bids</a></li> -->
           <li class="create-auction-button"><a class="navbar-link" href="{% url 'auctions:create' %}">Create an auction</a> </li>
           {% endif %}   
           {% if user.is_authenticated %}
-            <li class="navbar-item-right"><a class="navbar-link" href="{% url 'logout' %}?next={% url 'index' %}">Logout</a></li>
-            <li class="navbar-item-right"><span class="navbar-text">Logged in as: <span class="username">{{ user.get_username }}</span></span></li>
-          {% else %}
+            <!-- <li class="navbar-item-right"><a class="navbar-link" href="{% url 'logout' %}?next={% url 'index' %}">Logout</a></li> -->
+            <!-- <li class="navbar-item-right"><span class="navbar-text">Logged in as: <span class="username">{{ user.get_username }}</span></span></li> -->
+            <div class="dropdown mr-5" style="z-index:100 !important">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Current User: <span class="">{{ user.get_username }}</span>
+              </button>
+              <div class="dropdown-menu" style="z-index:100 !important" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" style="z-index:100 !important" href="{% url 'my_auctions' %}">My auctions</a>
+                <a class="dropdown-item" style="z-index:100 !important" href="{% url 'my_bids' %}">My bids</a>
+                <a class="dropdown-item" style="z-index:100 !important" href="{% url 'logout' %}?next={% url 'index' %}">Logout</a>
+              </div>
+            </div>
+            {% else %}
             <li class="navbar-item-right"><a class="navbar-link" href="{% url 'login' %}?next={% url 'index' %}">Login</a></li>
             <li class="navbar-item-right"><a class="navbar-link" href="{% url 'register' %}?next={{request.path}}">Register</a></li>
           {% endif %}
-          <div style = "margin-top: 15px;">
-            <!-- class="form-group mx-sm-3 mb-2" -->
-            <!-- <li for="" class="sr-only"></li> -->
-            <form method="post" action="/auctions/search" >
-              <input name="search_keyword" type="" class="navbar-link" id="" placeholder="search...."/>
-              <button type="submit">Submit<i class="fa fa-search"></i></button>
-            </form>
-            
-            </div>
+          
         </ul>
      {% endblock %}
       <div class="main-content">{% block content %}{% endblock %}</div>
